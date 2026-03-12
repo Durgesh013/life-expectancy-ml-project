@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-Predicts **life expectancy of countries** using health, economic, and demographic indicators.  
+This project predicts **life expectancy of countries** using health, economic, and demographic indicators.  
 Uses a **Linear Regression pipeline** to ensure consistent preprocessing and predictions.  
 The trained model is saved locally using **joblib**.
 
@@ -38,13 +38,27 @@ Model Evaluation: MAE, MSE, RMSE, R² Score, 5-fold cross-validation.
 
 Feature Importance
 
-Key factors affecting life expectancy:
+Feature importance shows which variables most influence life expectancy:
 
-Schooling, Adult Mortality, GDP, Income composition, BMI
+<img src="images/feature_importance_plot.png" alt="Feature Importance" width="600">
+
+Key factors include:
+
+Schooling
+
+Adult Mortality
+
+GDP
+
+Income composition
+
+BMI
 
 Predictions
 
 Visual comparison of actual vs predicted life expectancy:
+
+<img src="images/prediction_plot.png" alt="Prediction Plot" width="600">
 
 Points near the diagonal line indicate accurate predictions.
 
@@ -91,8 +105,8 @@ life-expectancy-ml-project
 ├── notebooks/analysis.ipynb
 ├── src/model.py
 ├── models/life_expectancy_model.joblib
-├── images/prediction_plot.png
 ├── images/feature_importance_plot.png
+├── images/prediction_plot.png
 └── README.md
 Future Improvements
 
