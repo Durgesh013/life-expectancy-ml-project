@@ -1,90 +1,82 @@
-Life Expectancy Prediction using Machine Learning
-Project Overview
+# Life Expectancy Prediction using Machine Learning
 
-This project predicts life expectancy of countries using machine learning techniques.
-The model analyzes health, economic, and demographic indicators to estimate life expectancy.
+## Project Overview
 
-The workflow includes data preprocessing, feature engineering, model training, evaluation, and visualization.
+This project predicts **life expectancy of countries** using machine learning techniques.  
+The model analyzes **health, economic, and demographic indicators** to estimate life expectancy.
 
-A Linear Regression model is trained using a machine learning pipeline to ensure consistent preprocessing and prediction.
-The trained model is saved locally using joblib for future use.
+The workflow includes **data preprocessing, feature engineering, model training, evaluation, and visualization**.
 
-Dataset
+A **Linear Regression model** is trained using a machine learning pipeline to ensure consistent preprocessing and prediction.  
+The trained model is saved locally using **joblib** for future use.
 
-The dataset used in this project is Life Expectancy Data, which contains health and socioeconomic indicators for multiple countries over several years.
+---
 
-Main Features
+## Dataset
 
-Country
+The dataset used in this project is **Life Expectancy Data**, which contains health and socioeconomic indicators for multiple countries over several years.
 
-Year
+### Main Features
 
-Adult Mortality
+- Country
+- Year
+- Adult Mortality
+- Infant deaths
+- Alcohol consumption
+- Hepatitis B immunization
+- GDP
+- Population
+- BMI
+- Schooling
+- Income composition of resources
+- Status (Developed / Developing)
 
-Infant deaths
+**Target Variable:** Life expectancy
 
-Alcohol consumption
+---
 
-Hepatitis B immunization
+## Project Workflow
 
-GDP
+### 1. Data Loading
 
-Population
+The dataset is loaded using **pandas** for analysis and preprocessing.
 
-BMI
-
-Schooling
-
-Income composition of resources
-
-Status (Developed / Developing)
-
-Target Variable: Life expectancy
-
-Project Workflow
-1. Data Loading
-
-The dataset is loaded using pandas for analysis and preprocessing.
-
-2. Data Cleaning
+### 2. Data Cleaning
 
 Data cleaning steps include:
 
-Removing rows where life expectancy is missing
+- Removing rows where **life expectancy is missing**  
+- Handling missing values using:
+  - **Country-wise median imputation**
+  - **Global median imputation** when country-level data is unavailable
 
-Handling missing values using:
-
-Country-wise median imputation
-
-Global median imputation when country-level data is unavailable
-
-3. Feature Preprocessing
+### 3. Feature Preprocessing
 
 Two types of preprocessing were applied.
 
-Categorical Features
+**Categorical Features**
 
-One-hot encoding applied to the Status column
+- One-hot encoding applied to the `Status` column
 
-Numerical Features
+**Numerical Features**
 
-Standard scaling applied using a scaler
+- Standard scaling applied using a scaler
 
-These transformations were implemented using ColumnTransformer.
+These transformations were implemented using **ColumnTransformer**.
 
-4. Machine Learning Pipeline
+### 4. Machine Learning Pipeline
 
 A pipeline was built to combine preprocessing and model training.
 
-Pipeline components:
+**Pipeline components:**
 
-Data preprocessing
+- Data preprocessing
+- Linear Regression model
 
-Linear Regression model
+Using a pipeline ensures that **the same preprocessing steps are applied during both training and prediction**.
 
-Using a pipeline ensures that the same preprocessing steps are applied during both training and prediction.
+The final trained pipeline is **saved using `joblib`** to the `models` folder:
 
-The final trained pipeline is saved using joblib to the models folder:
 
 import joblib
 joblib.dump(pipe, "models/life_expectancy_model.joblib")
