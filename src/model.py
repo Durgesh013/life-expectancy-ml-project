@@ -109,3 +109,27 @@ plt.grid()
 plt.tight_layout()
 plt.savefig("../images/prediction_plot.png", dpi=300)
 plt.show()
+
+linear = pipe.named_steps["regressor"]
+importance = linear.coef_[0]
+
+feature_importance = pd.DataFrame({
+    "Feature": X.columns,
+    "Importance": importance
+})
+
+feature_importance = feature_importance.sort_values(by="Importance", ascending=False)
+
+print(feature_importance)
+
+import matplotlib.pyplot as plt
+
+feature_importance = feature_importance.sort_values(by="Importance")
+
+plt.figure(figsize=(8,6))
+plt.barh(feature_importance["Feature"], feature_importance["Importance"])
+plt.title("Logistic Regression Feature Importance")
+plt.xlabel("Coefficient Value")
+plt.tight_layout()
+plt.savefig("../images/feature_importance_plot.png", dpi=300)
+plt.show()
