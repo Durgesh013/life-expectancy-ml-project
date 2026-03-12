@@ -1,31 +1,36 @@
 # Life Expectancy Prediction using Machine Learning
 
 ## Project Overview
-This project predicts **life expectancy of countries** using machine learning techniques.  
-The model analyzes health, economic, and demographic indicators to estimate life expectancy.
 
-A **Linear Regression model** is trained on the dataset after performing preprocessing steps such as handling missing values, encoding categorical variables, and scaling numerical features.
+This project predicts **life expectancy of countries** using machine learning techniques.
+The model analyzes **health, economic, and demographic indicators** to estimate life expectancy.
+
+The workflow includes **data preprocessing, feature engineering, model training, evaluation, and visualization**.
+
+A **Linear Regression model** is trained using a machine learning pipeline to ensure consistent preprocessing and prediction.
 
 ---
 
 ## Dataset
-The dataset used in this project is **Life Expectancy Data** collected from multiple countries and years.
+
+The dataset used in this project is **Life Expectancy Data**, which contains health and socioeconomic indicators for multiple countries over several years.
 
 ### Main Features
-- Country
-- Year
-- Adult Mortality
-- Infant deaths
-- Alcohol consumption
-- Hepatitis B immunization
-- GDP
-- Population
-- BMI
-- Schooling
-- Income composition of resources
-- Status (Developed / Developing)
 
-**Target Variable:**  
+* Country
+* Year
+* Adult Mortality
+* Infant deaths
+* Alcohol consumption
+* Hepatitis B immunization
+* GDP
+* Population
+* BMI
+* Schooling
+* Income composition of resources
+* Status (Developed / Developing)
+
+**Target Variable:**
 Life expectancy
 
 ---
@@ -33,74 +38,92 @@ Life expectancy
 ## Project Workflow
 
 ### 1. Data Loading
-The dataset is loaded using **pandas**.
+
+The dataset is loaded using **pandas** for analysis and preprocessing.
 
 ### 2. Data Cleaning
-- Removed rows where life expectancy was missing.
-- Missing values were handled using:
-  - Country-wise median imputation
-  - Global median imputation when country values were unavailable.
+
+Data cleaning steps include:
+
+* Removing rows where **life expectancy is missing**
+* Handling missing values using:
+
+  * **Country-wise median imputation**
+  * **Global median imputation** when country-level data is unavailable
 
 ### 3. Feature Preprocessing
 
 Two types of preprocessing were applied.
 
 **Categorical Features**
-- One-hot encoding applied to the `Status` column.
+
+* One-hot encoding applied to the `Status` column
 
 **Numerical Features**
-- Standard scaling applied using a scaler.
 
-This was implemented using **ColumnTransformer**.
+* Standard scaling applied using a scaler
 
-### 4. Model Pipeline
-A machine learning pipeline was created containing:
+These transformations were implemented using **ColumnTransformer**.
 
-- Preprocessing  
-- Linear Regression model  
+### 4. Machine Learning Pipeline
 
-Using a pipeline ensures preprocessing and modeling are applied consistently.
+A pipeline was built to combine preprocessing and model training.
+
+Pipeline components:
+
+* Data preprocessing
+* Linear Regression model
+
+Using a pipeline ensures that **the same preprocessing steps are applied during both training and prediction**.
 
 ### 5. Model Evaluation
 
-The model was evaluated using:
+The model performance was evaluated using:
 
-- Cross-validation (5-fold)
-- Mean Absolute Error (MAE)
-- Mean Squared Error (MSE)
-- Root Mean Squared Error (RMSE)
-- R² Score
+* **Mean Absolute Error (MAE)**
+* **Mean Squared Error (MSE)**
+* **Root Mean Squared Error (RMSE)**
+* **R² Score**
 
----
-
-## Model Performance
-
-Evaluation metrics used:
-
-- **MAE** – Average absolute prediction error
-- **MSE** – Average squared error
-- **RMSE** – Square root of MSE
-- **R² Score** – Proportion of variance explained by the model
-
-The model was also validated using **5-fold cross-validation**.
+The model was also validated using **5-fold cross-validation** to measure its generalization performance.
 
 ---
 
-## Visualization
-The project includes a visualization comparing **actual vs predicted life expectancy values**.
+## Feature Importance Analysis
 
-Points closer to the **red diagonal line** indicate more accurate predictions.
+Feature importance analysis was performed to understand **which variables influence life expectancy the most**.
+
+This helps identify key factors such as:
+
+* Schooling
+* Adult Mortality
+* GDP
+* Income composition
+* BMI
+
+The importance scores are visualized in the following plot.
+
+![Feature Importance](images/feature_importance_plot.png)
+
+---
+
+## Prediction Visualization
+
+The project also includes a visualization comparing **actual vs predicted life expectancy values**.
+
+Points closer to the **diagonal line** indicate more accurate predictions.
 
 ![Prediction Plot](images/prediction_plot.png)
 
 ---
 
 ## Technologies Used
-- Python
-- NumPy
-- Pandas
-- Matplotlib
-- Scikit-learn
+
+* Python
+* NumPy
+* Pandas
+* Matplotlib
+* Scikit-learn
 
 ---
 
@@ -109,27 +132,28 @@ Points closer to the **red diagonal line** indicate more accurate predictions.
 life-expectancy-ml-project
 │
 ├── data
-│ └── Life Expectancy Data.csv
+│   └── Life Expectancy Data.csv
 │
 ├── notebooks
-│ └── analysis.ipynb
+│   └── analysis.ipynb
 │
 ├── src
-│ └── model.py
+│   └── model.py
 │
 ├── images
-│ └── prediction_plot.png
+│   ├── prediction_plot.png
+│   └── feature_importance_plot.png
 │
 └── README.md
-
 
 ---
 
 ## Future Improvements
 
-Possible improvements for the project:
+Possible improvements for this project:
 
-- Try advanced models like Random Forest or Gradient Boosting
-- Perform feature importance analysis
-- Hyperparameter tuning
-- Deploy the model as a web application
+* Try advanced models such as **Random Forest** or **Gradient Boosting**
+* Perform **hyperparameter tuning**
+* Add **feature selection techniques**
+* Build a **web application for prediction**
+* Deploy the model using **Flask or FastAPI**
