@@ -133,3 +133,6 @@ plt.xlabel("Coefficient Value")
 plt.tight_layout()
 plt.savefig("../images/feature_importance_plot.png", dpi=300)
 plt.show()
+
+import joblib
+joblib.dump(pipe, "../models/life_expectancy_model.joblib")
