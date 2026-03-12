@@ -88,21 +88,32 @@ import pandas as pd
 input_data = pd.DataFrame({
     "Country": ["India"],
     "Year": [2025],
+    "Status": ["Developing"],
     "Adult Mortality": [150],
-    "Infant deaths": [30],
-    "Alcohol consumption": [4.5],
-    "Hepatitis B immunization": [95],
+    "infant deaths": [30],
+    "Alcohol": [4.5],
+    "percentage expenditure": [8.0],
+    "Hepatitis B": [95],
+    "Measles": [50],
+    "BMI": [22.5],
+    "under-five deaths": [35],
+    "Polio": [98],
+    "Total expenditure": [5.0],
+    "Diphtheria": [97],
+    "HIV/AIDS": [0.2],
     "GDP": [2000],
     "Population": [1400000000],
-    "BMI": [22.5],
-    "Schooling": [12],
+    "thinness  1-19 years": [3.5],
+    "thinness 5-9 years": [2.0],
     "Income composition of resources": [0.6],
-    "Status": ["Developing"]
+    "Schooling": [12]
 })
 
+# Make prediction
 predicted_life_expectancy = model.predict(input_data)
 print(predicted_life_expectancy)
-Technologies Used
+
+## Technologies Used
 
 Python, NumPy, Pandas, Matplotlib, Scikit-learn, Joblib
 
