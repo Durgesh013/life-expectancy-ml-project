@@ -1,3 +1,6 @@
+![Python Version](https://img.shields.io/badge/python-3.11-blue)
+![License](https://img.shields.io/badge/license-MIT-green)
+![GitHub Repo Size](https://img.shields.io/github/repo-size/Durgesh013/life-expectancy-ml-project)
 # Life Expectancy Prediction using Machine Learning
 
 ## Project Overview
