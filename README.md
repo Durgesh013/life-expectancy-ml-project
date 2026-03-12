@@ -2,169 +2,106 @@
 
 ## Project Overview
 
-This project predicts **life expectancy of countries** using machine learning techniques.  
-The model analyzes **health, economic, and demographic indicators** to estimate life expectancy.
-
-The workflow includes **data preprocessing, feature engineering, model training, evaluation, and visualization**.
-
-A **Linear Regression model** is trained using a machine learning pipeline to ensure consistent preprocessing and prediction.  
-The trained model is saved locally using **joblib** for future use.
+Predicts **life expectancy of countries** using health, economic, and demographic indicators.  
+Uses a **Linear Regression pipeline** to ensure consistent preprocessing and predictions.  
+The trained model is saved locally using **joblib**.
 
 ---
 
 ## Dataset
 
-The dataset used in this project is **Life Expectancy Data**, which contains health and socioeconomic indicators for multiple countries over several years.
+**Life Expectancy Data** with features such as:
 
-### Main Features
-
-- Country
-- Year
-- Adult Mortality
-- Infant deaths
-- Alcohol consumption
-- Hepatitis B immunization
-- GDP
-- Population
-- BMI
-- Schooling
-- Income composition of resources
-- Status (Developed / Developing)
+- Country, Year, Adult Mortality, Infant deaths, Alcohol consumption  
+- Hepatitis B immunization, GDP, Population, BMI, Schooling  
+- Income composition, Status (Developed / Developing)
 
 **Target Variable:** Life expectancy
 
 ---
 
-## Project Workflow
+## Workflow
 
-### 1. Data Loading
-
-The dataset is loaded using **pandas** for analysis and preprocessing.
-
-### 2. Data Cleaning
-
-Data cleaning steps include:
-
-- Removing rows where **life expectancy is missing**  
-- Handling missing values using:
-  - **Country-wise median imputation**
-  - **Global median imputation** when country-level data is unavailable
-
-### 3. Feature Preprocessing
-
-Two types of preprocessing were applied.
-
-**Categorical Features**
-
-- One-hot encoding applied to the `Status` column
-
-**Numerical Features**
-
-- Standard scaling applied using a scaler
-
-These transformations were implemented using **ColumnTransformer**.
-
-### 4. Machine Learning Pipeline
-
-A pipeline was built to combine preprocessing and model training.
-
-**Pipeline components:**
-
-- Data preprocessing
-- Linear Regression model
-
-Using a pipeline ensures that **the same preprocessing steps are applied during both training and prediction**.
-
-The final trained pipeline is **saved using `joblib`** to the `models` folder:
+1. **Data Loading:** Using `pandas`.  
+2. **Data Cleaning:** Remove missing target values, impute missing data (country-wise/global median).  
+3. **Feature Preprocessing:**  
+   - Categorical → One-hot encoding (`Status`)  
+   - Numerical → Standard scaling  
+4. **Pipeline:** Combines preprocessing + Linear Regression model.  
 
 
 import joblib
+# Save trained pipeline
 joblib.dump(pipe, "models/life_expectancy_model.joblib")
 
-This allows loading the model later for prediction without retraining.
+Model Evaluation: MAE, MSE, RMSE, R² Score, 5-fold cross-validation.
 
-5. Model Evaluation
+Feature Importance
 
-The model performance was evaluated using:
+Key factors affecting life expectancy:
 
-Mean Absolute Error (MAE)
+Schooling, Adult Mortality, GDP, Income composition, BMI
 
-Mean Squared Error (MSE)
+Predictions
 
-Root Mean Squared Error (RMSE)
+Visual comparison of actual vs predicted life expectancy:
 
-R² Score
+Points near the diagonal line indicate accurate predictions.
 
-The model was also validated using 5-fold cross-validation to measure its generalization performance.
+Usage
 
-Feature Importance Analysis
+Install dependencies:
 
-Feature importance analysis was performed to understand which variables influence life expectancy the most.
+pip install pandas scikit-learn joblib
 
-Key factors include:
+Load model:
 
-Schooling
+import joblib
+model = joblib.load("models/life_expectancy_model.joblib")
 
-Adult Mortality
+Predict:
 
-GDP
+import pandas as pd
 
-Income composition
+input_data = pd.DataFrame({
+    "Country": ["India"],
+    "Year": [2025],
+    "Adult Mortality": [150],
+    "Infant deaths": [30],
+    "Alcohol consumption": [4.5],
+    "Hepatitis B immunization": [95],
+    "GDP": [2000],
+    "Population": [1400000000],
+    "BMI": [22.5],
+    "Schooling": [12],
+    "Income composition of resources": [0.6],
+    "Status": ["Developing"]
+})
 
-BMI
-
-The importance scores are visualized in the following plot.
-
-Prediction Visualization
-
-The project includes a visualization comparing actual vs predicted life expectancy values.
-
-Points closer to the diagonal line indicate more accurate predictions.
-
+predicted_life_expectancy = model.predict(input_data)
+print(predicted_life_expectancy)
 Technologies Used
 
-Python
-
-NumPy
-
-Pandas
-
-Matplotlib
-
-Scikit-learn
-
-Joblib (for saving the trained model)
+Python, NumPy, Pandas, Matplotlib, Scikit-learn, Joblib
 
 Project Structure
 life-expectancy-ml-project
 │
-├── data
-│   └── Life Expectancy Data.csv
-│
-├── notebooks
-│   └── analysis.ipynb
-│
-├── src
-│   └── model.py
-│
-├── models
-│   └── life_expectancy_model.joblib
-│
-├── images
-│   ├── prediction_plot.png
-│   └── feature_importance_plot.png
-│
+├── data/Life Expectancy Data.csv
+├── notebooks/analysis.ipynb
+├── src/model.py
+├── models/life_expectancy_model.joblib
+├── images/prediction_plot.png
+├── images/feature_importance_plot.png
 └── README.md
 Future Improvements
 
-Possible improvements for this project:
+Try advanced models (Random Forest, Gradient Boosting)
 
-Try advanced models such as Random Forest or Gradient Boosting
+Hyperparameter tuning
 
-Perform hyperparameter tuning
-
-Add feature selection techniques
+Feature selection techniques
 
 Build a web application for prediction
 
-Deploy the model using Flask or FastAPI
+Deploy using Flask or FastAPI
