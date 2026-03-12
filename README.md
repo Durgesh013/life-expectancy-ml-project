@@ -6,7 +6,7 @@
 , 
 [Analysis Notebook](notebooks/analysis.ipynb)
 ---
-# Life Expectancy Prediction using Machine Learning
+# Life Expectancy Prediction using Machine-Learning
 
 ## Project Overview
 
