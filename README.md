@@ -1,134 +1,149 @@
-# Life Expectancy Prediction using Machine Learning
+Life Expectancy Prediction using Machine Learning
+Project Overview
 
-## Project Overview
+This project predicts life expectancy of countries using machine learning techniques.
+The model analyzes health, economic, and demographic indicators to estimate life expectancy.
 
-This project predicts **life expectancy of countries** using machine learning techniques.
-The model analyzes **health, economic, and demographic indicators** to estimate life expectancy.
+The workflow includes data preprocessing, feature engineering, model training, evaluation, and visualization.
 
-The workflow includes **data preprocessing, feature engineering, model training, evaluation, and visualization**.
+A Linear Regression model is trained using a machine learning pipeline to ensure consistent preprocessing and prediction.
+The trained model is saved locally using joblib for future use.
 
-A **Linear Regression model** is trained using a machine learning pipeline to ensure consistent preprocessing and prediction.
+Dataset
 
----
+The dataset used in this project is Life Expectancy Data, which contains health and socioeconomic indicators for multiple countries over several years.
 
-## Dataset
+Main Features
 
-The dataset used in this project is **Life Expectancy Data**, which contains health and socioeconomic indicators for multiple countries over several years.
+Country
 
-### Main Features
+Year
 
-* Country
-* Year
-* Adult Mortality
-* Infant deaths
-* Alcohol consumption
-* Hepatitis B immunization
-* GDP
-* Population
-* BMI
-* Schooling
-* Income composition of resources
-* Status (Developed / Developing)
+Adult Mortality
 
-**Target Variable:**
-Life expectancy
+Infant deaths
 
----
+Alcohol consumption
 
-## Project Workflow
+Hepatitis B immunization
 
-### 1. Data Loading
+GDP
 
-The dataset is loaded using **pandas** for analysis and preprocessing.
+Population
 
-### 2. Data Cleaning
+BMI
+
+Schooling
+
+Income composition of resources
+
+Status (Developed / Developing)
+
+Target Variable: Life expectancy
+
+Project Workflow
+1. Data Loading
+
+The dataset is loaded using pandas for analysis and preprocessing.
+
+2. Data Cleaning
 
 Data cleaning steps include:
 
-* Removing rows where **life expectancy is missing**
-* Handling missing values using:
+Removing rows where life expectancy is missing
 
-  * **Country-wise median imputation**
-  * **Global median imputation** when country-level data is unavailable
+Handling missing values using:
 
-### 3. Feature Preprocessing
+Country-wise median imputation
+
+Global median imputation when country-level data is unavailable
+
+3. Feature Preprocessing
 
 Two types of preprocessing were applied.
 
-**Categorical Features**
+Categorical Features
 
-* One-hot encoding applied to the `Status` column
+One-hot encoding applied to the Status column
 
-**Numerical Features**
+Numerical Features
 
-* Standard scaling applied using a scaler
+Standard scaling applied using a scaler
 
-These transformations were implemented using **ColumnTransformer**.
+These transformations were implemented using ColumnTransformer.
 
-### 4. Machine Learning Pipeline
+4. Machine Learning Pipeline
 
 A pipeline was built to combine preprocessing and model training.
 
 Pipeline components:
 
-* Data preprocessing
-* Linear Regression model
+Data preprocessing
 
-Using a pipeline ensures that **the same preprocessing steps are applied during both training and prediction**.
+Linear Regression model
 
-### 5. Model Evaluation
+Using a pipeline ensures that the same preprocessing steps are applied during both training and prediction.
+
+The final trained pipeline is saved using joblib to the models folder:
+
+import joblib
+joblib.dump(pipe, "models/life_expectancy_model.joblib")
+
+This allows loading the model later for prediction without retraining.
+
+5. Model Evaluation
 
 The model performance was evaluated using:
 
-* **Mean Absolute Error (MAE)**
-* **Mean Squared Error (MSE)**
-* **Root Mean Squared Error (RMSE)**
-* **R² Score**
+Mean Absolute Error (MAE)
 
-The model was also validated using **5-fold cross-validation** to measure its generalization performance.
+Mean Squared Error (MSE)
 
----
+Root Mean Squared Error (RMSE)
 
-## Feature Importance Analysis
+R² Score
 
-Feature importance analysis was performed to understand **which variables influence life expectancy the most**.
+The model was also validated using 5-fold cross-validation to measure its generalization performance.
 
-This helps identify key factors such as:
+Feature Importance Analysis
 
-* Schooling
-* Adult Mortality
-* GDP
-* Income composition
-* BMI
+Feature importance analysis was performed to understand which variables influence life expectancy the most.
+
+Key factors include:
+
+Schooling
+
+Adult Mortality
+
+GDP
+
+Income composition
+
+BMI
 
 The importance scores are visualized in the following plot.
 
-![Feature Importance](images/feature_importance_plot.png)
+Prediction Visualization
 
----
+The project includes a visualization comparing actual vs predicted life expectancy values.
 
-## Prediction Visualization
+Points closer to the diagonal line indicate more accurate predictions.
 
-The project also includes a visualization comparing **actual vs predicted life expectancy values**.
+Technologies Used
 
-Points closer to the **diagonal line** indicate more accurate predictions.
+Python
 
-![Prediction Plot](images/prediction_plot.png)
+NumPy
 
----
+Pandas
 
-## Technologies Used
+Matplotlib
 
-* Python
-* NumPy
-* Pandas
-* Matplotlib
-* Scikit-learn
+Scikit-learn
 
----
+Joblib (for saving the trained model)
 
-## Project Structure
-
+Project Structure
 life-expectancy-ml-project
 │
 ├── data
@@ -140,20 +155,24 @@ life-expectancy-ml-project
 ├── src
 │   └── model.py
 │
+├── models
+│   └── life_expectancy_model.joblib
+│
 ├── images
 │   ├── prediction_plot.png
 │   └── feature_importance_plot.png
 │
 └── README.md
-
----
-
-## Future Improvements
+Future Improvements
 
 Possible improvements for this project:
 
-* Try advanced models such as **Random Forest** or **Gradient Boosting**
-* Perform **hyperparameter tuning**
-* Add **feature selection techniques**
-* Build a **web application for prediction**
-* Deploy the model using **Flask or FastAPI**
+Try advanced models such as Random Forest or Gradient Boosting
+
+Perform hyperparameter tuning
+
+Add feature selection techniques
+
+Build a web application for prediction
+
+Deploy the model using Flask or FastAPI
