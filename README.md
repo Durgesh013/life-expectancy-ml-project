@@ -1,56 +1,227 @@
 ![Python Version](https://img.shields.io/badge/python-3.11-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
 ![GitHub Repo Size](https://img.shields.io/github/repo-size/Durgesh013/life-expectancy-ml-project)
+
 ---
-[Dataset CSV](data/Life%20Expectancy%20Data.csv)
-, 
+
+[Dataset CSV](data/Life%20Expectancy%20Data.csv)  
 [Analysis Notebook](notebooks/analysis.ipynb)
+
 ---
-# Life Expectancy Prediction using Machine-Learning
+
+# Life Expectancy Prediction using Machine Learning
 
 ## Project Overview
 
-This project predicts **life expectancy of countries** using health, economic, and demographic indicators.  
-Uses a **Linear Regression pipeline** to ensure consistent preprocessing and predictions.  
-The trained model is saved locally using **joblib**.
+This project predicts **life expectancy of countries** using various health, economic, and demographic indicators.
+
+Several machine learning models were tested:
+
+- Linear Regression
+- Ridge Regression
+- Lasso Regression
+- Random Forest
+
+The results showed that **linear models (Linear, Ridge, and Lasso)** performed significantly better than the Random Forest model for this dataset.
+
+The final trained model is saved using **joblib** and can be reused for predictions.
 
 ---
 
-## Dataset
+# Dataset
 
-**Life Expectancy Data** with features such as:
+The dataset contains information about countries and factors affecting life expectancy.
 
-- Country, Year, Adult Mortality, Infant deaths, Alcohol consumption  
-- Hepatitis B immunization, GDP, Population, BMI, Schooling  
-- Income composition, Status (Developed / Developing)
+Features include:
 
-**Target Variable:** Life expectancy
+- Country
+- Year
+- Adult Mortality
+- Infant deaths
+- Alcohol consumption
+- Hepatitis B immunization
+- Measles cases
+- BMI
+- GDP
+- Population
+- Schooling
+- Income composition of resources
+- Health expenditures
+- Immunization rates
+- Nutritional indicators
+
+**Target Variable**
+
+Life expectancy
+
+Dataset source:
+data/Life Expectancy Data.csv
+
 
 ---
 
-## Workflow
+# Data Preprocessing
 
-1. **Data Loading:** Using `pandas`.  
-2. **Data Cleaning:** Remove missing target values, impute missing data (country-wise/global median).  
-3. **Feature Preprocessing:**  
-   - Categorical → One-hot encoding (`Status`)  
-   - Numerical → Standard scaling  
-4. **Pipeline:** Combines preprocessing + Linear Regression model.  
+The following preprocessing steps were performed:
 
+### 1. Missing Target Values Removed
 
-import joblib
-# Save trained pipeline
-joblib.dump(pipe, "models/life_expectancy_model.joblib")
+Rows where **Life expectancy** was missing were removed.
 
-Model Evaluation: MAE, MSE, RMSE, R² Score, 5-fold cross-validation.
+### 2. Country-wise Median Imputation
+
+For important features:
+
+- GDP
+- Population
+- Hepatitis B
+
+Missing values were filled using **median values grouped by country**.
+
+If a country had no values, the **global median** was used.
+
+### 3. Median Imputation for Remaining Features
+
+The following features were filled using **training-set median values**:
+
+- Total expenditure
+- Alcohol
+- Income composition of resources
+- Schooling
+- Thinness indicators
+- BMI
+- Immunization features
+- Adult mortality
+
+### 4. Feature Encoding and Scaling
+
+- **Categorical variable**
+
+Status (Developed / Developing)
+
+encoded using **OneHotEncoder**
+
+- **Numerical features**
+
+scaled using **StandardScaler**
+
+These transformations were combined using a **ColumnTransformer pipeline**.
+
+---
+
+# Machine Learning Pipeline
+
+The project uses a **Scikit-learn Pipeline** that combines preprocessing and model training.
+
+Example:
+
+python
+pipe = Pipeline([
+    ("preprocessing", preprocessor),
+    ("regressor", LinearRegression())
+])
+This ensures the same preprocessing is applied during both training and prediction.
+
+Models Tested
+Four models were evaluated:
+Model	                 Method Used
+Linear Regression	     Baseline model
+Ridge Regression	     L2 Regularization
+Lasso Regression	     L1 Regularization
+Random Forest	        Ensemble Tree Model
+
+Model Evaluation
+
+Models were evaluated using:
+
+R² Score
+
+Mean Squared Error (MSE)
+
+Mean Absolute Error (MAE)
+
+Root Mean Squared Error (RMSE)
+
+Cross Validation
+
+Example:
+
+cv_scores = cross_val_score(
+    pipe,
+    X_train,
+    y_train,
+    cv=5,
+    scoring="r2"
+)
+
+Results
+Linear Regression
+
+Linear regression achieved strong performance using the pipeline with standardized numerical features.
+
+Ridge Regression
+
+Hyperparameter tuning using GridSearchCV:
+
+params = {
+    "Ridge__alpha": [0.001,0.01,0.1,1,10,100]
+}
+
+Best result:
+
+Best alpha: 0.1
+Best CV Score: 0.813
+Test R²: 0.8227
+Lasso Regression
+
+Hyperparameter tuning using GridSearchCV:
+
+params = {
+    "Lasso__alpha":[0.0001,0.001,0.01,0.1,1,10]
+}
+
+Best result:
+
+Best alpha: 0.001
+Best CV Score: 0.813
+Test R²: 0.8228
+Random Forest
+
+Random Forest was tested with RandomizedSearchCV for hyperparameter tuning.
+
+Example parameters:
+
+params_random = {
+    "rf__n_estimators":[100,200,300],
+    "rf__max_depth":[None,10,20],
+    "rf__min_samples_split":[2,5,10],
+    "rf__min_samples_leaf":[1,2,4]
+}
+
+Best model performance:
+
+OOB Score: 0.231
+Test R²: 0.232
+MSE: 71.44
+Observation
+
+Random Forest performed significantly worse than linear models on this dataset.
+
+Possible reasons:
+
+Dataset structure may favor linear relationships
+
+Feature scaling benefits linear models
+
+Dataset size may be insufficient for complex tree ensembles
 
 Feature Importance
 
-Feature importance shows which variables most influence life expectancy:
+Feature importance was derived from linear regression coefficients.
 
-<img src="images/feature_importance_plot.png" alt="Feature Importance" width="600">
+<img src="images/feature_importance_plot.png" width="600">
 
-Key factors include:
+Important predictors include:
 
 Schooling
 
@@ -58,31 +229,36 @@ Adult Mortality
 
 GDP
 
-Income composition
+Income composition of resources
 
 BMI
 
-Predictions
+Prediction Visualization
 
-Visual comparison of actual vs predicted life expectancy:
+Actual vs predicted life expectancy:
 
-<img src="images/prediction_plot.png" alt="Prediction Plot" width="600">
+<img src="images/prediction_plot.png" width="600">
 
-Points near the diagonal line indicate accurate predictions.
+Points close to the diagonal line represent accurate predictions.
 
-Usage
+Saving the Model
 
-Install dependencies:
-
-pip install pandas scikit-learn joblib
-
-Load model:
+The trained pipeline is saved using joblib.
 
 import joblib
+
+joblib.dump(pipe,"models/life_expectancy_model.joblib")
+
+This allows the model to be loaded later without retraining.
+
+How to Use the Model
+Install Dependencies
+pip install pandas scikit-learn joblib matplotlib
+Load the Model
+import joblib
+
 model = joblib.load("models/life_expectancy_model.joblib")
-
-Predict:
-
+Make a Prediction
 import pandas as pd
 
 input_data = pd.DataFrame({
@@ -109,32 +285,53 @@ input_data = pd.DataFrame({
     "Schooling": [12]
 })
 
-# Make prediction
-predicted_life_expectancy = model.predict(input_data)
-print(predicted_life_expectancy)
+prediction = model.predict(input_data)
 
-## Technologies Used
+print(prediction)
+Technologies Used
 
-Python, NumPy, Pandas, Matplotlib, Scikit-learn, Joblib
+Python
+
+NumPy
+
+Pandas
+
+Matplotlib
+
+Scikit-learn
+
+Joblib
 
 Project Structure
 life-expectancy-ml-project
 │
-├── data/Life Expectancy Data.csv
-├── notebooks/analysis.ipynb
-├── src/model.py
-├── models/life_expectancy_model.joblib
-├── images/feature_importance_plot.png
-├── images/prediction_plot.png
+├── data
+│   └── Life Expectancy Data.csv
+│
+├── notebooks
+│   └── analysis.ipynb
+│
+├── src
+│   └── model.py
+│
+├── models
+│   └── life_expectancy_model.joblib
+│
+├── images
+│   ├── feature_importance_plot.png
+│   └── prediction_plot.png
+│
 └── README.md
 Future Improvements
 
-Try advanced models (Random Forest, Gradient Boosting)
+Possible improvements for the project:
 
-Hyperparameter tuning
+Test Gradient Boosting models
 
-Feature selection techniques
+Try XGBoost or LightGBM
 
-Build a web application for prediction
+Perform advanced feature engineering
 
-Deploy using Flask or FastAPI
+Build an interactive prediction web app
+
+Deploy the model using Flask or FastAPI
